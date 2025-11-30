@@ -139,7 +139,7 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            "group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full",
+            "group/sidebar-wrapper flex min-h-svh w-full",
             className
           )}
           {...props}
@@ -214,6 +214,19 @@ function Sidebar({
       data-side={side}
       data-slot="sidebar"
     >
+      {/* Fixed background for inset variant that matches sidebar position */}
+      {variant === "inset" && (
+        <div
+          data-slot="sidebar-background"
+          className={cn(
+            "fixed inset-y-0 z-0 bg-sidebar transition-[left,right,width] duration-200 ease-linear",
+            side === "left"
+              ? "left-0 w-(--sidebar-width) group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
+              : "right-0 w-(--sidebar-width) group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
+            "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
+          )}
+        />
+      )}
       {/* This is what handles the sidebar gap on desktop */}
       <div
         data-slot="sidebar-gap"
