@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
+import { Route as LayoutFormsRouteImport } from './routes/_layout.forms'
 import { Route as LayoutEditorRouteImport } from './routes/_layout.editor'
 import { Route as LayoutDashboardRouteImport } from './routes/_layout.dashboard'
 
@@ -21,6 +22,11 @@ const LayoutRoute = LayoutRouteImport.update({
 const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFormsRoute = LayoutFormsRouteImport.update({
+  id: '/forms',
+  path: '/forms',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutEditorRoute = LayoutEditorRouteImport.update({
@@ -37,11 +43,13 @@ const LayoutDashboardRoute = LayoutDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/dashboard': typeof LayoutDashboardRoute
   '/editor': typeof LayoutEditorRoute
+  '/forms': typeof LayoutFormsRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
   '/dashboard': typeof LayoutDashboardRoute
   '/editor': typeof LayoutEditorRoute
+  '/forms': typeof LayoutFormsRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -49,18 +57,20 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/dashboard': typeof LayoutDashboardRoute
   '/_layout/editor': typeof LayoutEditorRoute
+  '/_layout/forms': typeof LayoutFormsRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/dashboard' | '/editor' | '/'
+  fullPaths: '/dashboard' | '/editor' | '/forms' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/dashboard' | '/editor' | '/'
+  to: '/dashboard' | '/editor' | '/forms' | '/'
   id:
     | '__root__'
     | '/_layout'
     | '/_layout/dashboard'
     | '/_layout/editor'
+    | '/_layout/forms'
     | '/_layout/'
   fileRoutesById: FileRoutesById
 }
@@ -84,6 +94,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/forms': {
+      id: '/_layout/forms'
+      path: '/forms'
+      fullPath: '/forms'
+      preLoaderRoute: typeof LayoutFormsRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/editor': {
       id: '/_layout/editor'
       path: '/editor'
@@ -104,12 +121,14 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutDashboardRoute: typeof LayoutDashboardRoute
   LayoutEditorRoute: typeof LayoutEditorRoute
+  LayoutFormsRoute: typeof LayoutFormsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutDashboardRoute: LayoutDashboardRoute,
   LayoutEditorRoute: LayoutEditorRoute,
+  LayoutFormsRoute: LayoutFormsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 

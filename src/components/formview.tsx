@@ -123,7 +123,7 @@ export function FormView({ survey }: { survey: FormSpec | undefined }) {
   }
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full md:max-w-md">
       <form>
         <FieldGroup>
           {survey.blocks.map((block) => renderBlock(block))}

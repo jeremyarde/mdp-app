@@ -38,10 +38,15 @@ export default function Page() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="@container/main flex flex-1 flex-col gap-2">
-        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-          <Editor formtext={formtext} setFormtext={setFormtext} />
-          <Separator orientation="horizontal" />
-          <FormView survey={survey} />
+        <div className="flex flex-col md:flex-row gap-4 py-4 md:gap-6 md:py-6">
+          <div className="flex-1 min-w-0 p-4">
+            <Editor formtext={formtext} setFormtext={setFormtext} />
+          </div>
+          <Separator orientation="horizontal" className="md:hidden" />
+          <Separator orientation="vertical" className="hidden md:block" />
+          <div className="flex-1 min-w-0 p-4">
+            <FormView survey={survey} />
+          </div>
         </div>
       </div>
     </div>
