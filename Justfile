@@ -6,4 +6,5 @@ build:
 
 deploy:
     pnpm run build
-    gh-pages -d dist
+    # rename dist to docs
+    mv dist docs
