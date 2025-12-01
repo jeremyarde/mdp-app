@@ -13,7 +13,7 @@ export default defineConfig({
   // If deploying to a repository (not user/organization page), set this to your repo name
   // Example: base: '/mdp-app/'
   // For root domain deployment, use: base: '/'
-  base: process.env.GITHUB_PAGES_BASE || "/",
+  // base: process.env.GITHUB_PAGES_BASE || "/",
   plugins: [
     tanstackRouter({
       target: "react",
