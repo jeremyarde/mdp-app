@@ -2,6 +2,8 @@ import { Editor } from "@/components/editor";
 import { FormView } from "@/components/formview";
 import { Separator } from "@/components/ui/separator";
 import type { FormSpec } from "@/lib/survey";
+import { get } from "@/lib/api";
+import { toast } from "sonner";
 
 import { markdown_to_form_wasm_v2 } from "markdownparser";
 import { useEffect, useState } from "react";
@@ -25,9 +27,40 @@ radio: my radio
 
 Submit: submit`;
 
-export default function Page() {
+interface Form {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export default function Page({ formId }: { formId?: string }) {
   const [formtext, setFormtext] = useState<string>(exampleText);
   const [survey, setSurvey] = useState<FormSpec | undefined>(undefined);
+
+  // Load form content when formId is provided
+  useEffect(() => {
+    async function loadForm() {
+      if (!formId) {
+        return;
+      }
+
+      try {
+        const form = await get<Form>(`/forms/${formId}`);
+        if (form.content) {
+          setFormtext(form.content);
+        } else {
+          toast.error("Form content not found");
+        }
+      } catch (error) {
+        console.error("Failed to load form:", error);
+        toast.error("Failed to load form");
+      }
+    }
+
+    loadForm();
+  }, [formId]);
 
   useEffect(() => {
     const result = markdown_to_form_wasm_v2(formtext);

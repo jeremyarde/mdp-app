@@ -50,6 +50,7 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useNavigate } from "@tanstack/react-router";
 
 import { get } from "@/lib/api";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -100,8 +101,21 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const schema = z.object({
+// Form schema from API
+const formSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  content: z.string(),
+  createdAt: z.string(),
+  updatedAt: z.string().optional(),
+});
+
+type Form = z.infer<typeof formSchema>;
+
+// Table row schema for transformed data
+const tableRowSchema = z.object({
   id: z.number(),
+  formId: z.string(),
   header: z.string(),
   type: z.string(),
   status: z.string(),
@@ -110,16 +124,7 @@ const schema = z.object({
   reviewer: z.string(),
 });
 
-type TableRow = z.infer<typeof schema>;
-
-// Form interface from API
-interface Form {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  updatedAt?: string;
-}
+type TableRow = z.infer<typeof tableRowSchema>;
 
 // Create a separate component for the drag handle
 function DragHandle({ id }: { id: number }) {
@@ -176,9 +181,10 @@ const columns: ColumnDef<TableRow>[] = [
   {
     accessorKey: "header",
     header: "Header",
-    cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />;
-    },
+    /* This shows a sidebar dialog with some information about the form */
+    // cell: ({ row }) => {
+    //   return <TableCellViewer item={row.original} />;
+    // },
     enableHiding: false,
   },
   {
@@ -320,16 +326,34 @@ function DraggableRow({ row }: { row: Row<TableRow> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id,
   });
+  const navigate = useNavigate();
 
   return (
     <TableRow
       data-state={row.getIsSelected() && "selected"}
       data-dragging={isDragging}
       ref={setNodeRef}
-      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80"
+      className="relative z-0 data-[dragging=true]:z-10 data-[dragging=true]:opacity-80 cursor-pointer hover:bg-muted/50"
       style={{
         transform: CSS.Transform.toString(transform),
         transition: transition,
+      }}
+      onClick={(e) => {
+        // Don't navigate if clicking on interactive elements
+        const target = e.target as HTMLElement;
+        if (
+          target.closest("button") ||
+          target.closest("input") ||
+          target.closest("select") ||
+          target.closest("[role='menu']") ||
+          target.closest("[role='menuitem']")
+        ) {
+          return;
+        }
+        navigate({
+          to: "/editor",
+          search: { formId: row.original.formId },
+        });
       }}
     >
       {row.getVisibleCells().map((cell) => (
@@ -367,12 +391,16 @@ export function DataTable() {
     async function loadForms() {
       try {
         setLoading(true);
-        const forms = await get<Form[]>("/forms");
+        const formsData = await get<Form[]>("/forms");
+
+        // Validate forms from API
+        const forms = formsData.map((form) => formSchema.parse(form));
 
         // Transform Form data to match the table schema
         const transformedData: TableRow[] = forms.map((form, index) => {
           const row = {
             id: parseInt(form.id) || index + 1,
+            formId: form.id,
             header: form.title,
             type: "Form",
             status: "Done",
@@ -380,8 +408,8 @@ export function DataTable() {
             limit: "0",
             reviewer: "Assign reviewer",
           };
-          // Validate with schema
-          return schema.parse(row);
+          // Validate transformed row with table row schema
+          return tableRowSchema.parse(row);
         });
 
         setData(transformedData);

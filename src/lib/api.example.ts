@@ -1,6 +1,6 @@
 /**
  * Example usage of the mock API client
- * 
+ *
  * This file demonstrates how to use the localStorage-based API client.
  * When you're ready to switch to a real backend, you can replace the
  * implementation in api.ts with actual fetch calls.
@@ -138,4 +138,3 @@ export async function get<T = unknown>(endpoint: string): Promise<T> {
   return response.json();
 }
 */
-
