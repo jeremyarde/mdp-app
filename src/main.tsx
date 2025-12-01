@@ -1,7 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
@@ -9,6 +7,9 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 // Set up a Router instance
 const router = createRouter({
   routeTree,
+  context: {
+    authenticated: false,
+  },
   defaultPreload: "intent",
   scrollRestoration: true,
 });

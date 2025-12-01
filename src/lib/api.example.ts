@@ -18,16 +18,19 @@ interface Form {
 }
 
 // Example 1: Get all forms
+// @ts-expect-error - Example function, intentionally unused
 async function getAllForms(): Promise<Form[]> {
   return get<Form[]>("/forms");
 }
 
 // Example 2: Get a single form by ID
+// @ts-expect-error - Example function, intentionally unused
 async function getForm(id: string): Promise<Form> {
   return get<Form>(`/forms/${id}`);
 }
 
 // Example 3: Create a new form
+// @ts-expect-error - Example function, intentionally unused
 async function createForm(title: string, content: string): Promise<Form> {
   return post<Form>("/forms", {
     title,
@@ -36,6 +39,7 @@ async function createForm(title: string, content: string): Promise<Form> {
 }
 
 // Example 4: Update an existing form
+// @ts-expect-error - Example function, intentionally unused
 async function updateForm(id: string, updates: Partial<Form>): Promise<Form> {
   return put<Form>(`/forms/${id}`, {
     id,
@@ -44,6 +48,7 @@ async function updateForm(id: string, updates: Partial<Form>): Promise<Form> {
 }
 
 // Example 5: Partial update
+// @ts-expect-error - Example function, intentionally unused
 async function patchForm(id: string, updates: Partial<Form>): Promise<Form> {
   return patch<Form>(`/forms/${id}`, {
     id,
@@ -52,11 +57,13 @@ async function patchForm(id: string, updates: Partial<Form>): Promise<Form> {
 }
 
 // Example 6: Delete a form
+// @ts-expect-error - Example function, intentionally unused
 async function deleteForm(id: string): Promise<void> {
   await del("/forms", { id });
 }
 
 // Example 7: Seed initial data (useful for development)
+// @ts-expect-error - Example function, intentionally unused
 function initializeForms(): void {
   seedData<Form>("/forms", [
     {
@@ -75,6 +82,7 @@ function initializeForms(): void {
 }
 
 // Example 8: Clear all API data
+// @ts-expect-error - Example function, intentionally unused
 function resetApiData(): void {
   clearApiCache();
 }

@@ -2,7 +2,6 @@ import {
   IconChartBar,
   IconDashboard,
   IconFolder,
-  IconUsers,
 } from "@tabler/icons-react";
 import {
   SidebarGroup,
