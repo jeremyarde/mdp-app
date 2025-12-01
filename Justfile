@@ -6,5 +6,3 @@ build:
 
 deploy:
     pnpm run build
-    # rename dist to docs
-    mv dist docs
