@@ -13,7 +13,6 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
 import { Route as LayoutFormsRouteImport } from './routes/_layout.forms'
 import { Route as LayoutEditorRouteImport } from './routes/_layout.editor'
-import { Route as LayoutDashboardRouteImport } from './routes/_layout.dashboard'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -34,20 +33,13 @@ const LayoutEditorRoute = LayoutEditorRouteImport.update({
   path: '/editor',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutDashboardRoute = LayoutDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => LayoutRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
-  '/dashboard': typeof LayoutDashboardRoute
   '/editor': typeof LayoutEditorRoute
   '/forms': typeof LayoutFormsRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
-  '/dashboard': typeof LayoutDashboardRoute
   '/editor': typeof LayoutEditorRoute
   '/forms': typeof LayoutFormsRoute
   '/': typeof LayoutIndexRoute
@@ -55,20 +47,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
-  '/_layout/dashboard': typeof LayoutDashboardRoute
   '/_layout/editor': typeof LayoutEditorRoute
   '/_layout/forms': typeof LayoutFormsRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/dashboard' | '/editor' | '/forms' | '/'
+  fullPaths: '/editor' | '/forms' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/dashboard' | '/editor' | '/forms' | '/'
+  to: '/editor' | '/forms' | '/'
   id:
     | '__root__'
     | '/_layout'
-    | '/_layout/dashboard'
     | '/_layout/editor'
     | '/_layout/forms'
     | '/_layout/'
@@ -108,25 +98,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutEditorRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/dashboard': {
-      id: '/_layout/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof LayoutDashboardRouteImport
-      parentRoute: typeof LayoutRoute
-    }
   }
 }
 
 interface LayoutRouteChildren {
-  LayoutDashboardRoute: typeof LayoutDashboardRoute
   LayoutEditorRoute: typeof LayoutEditorRoute
   LayoutFormsRoute: typeof LayoutFormsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
-  LayoutDashboardRoute: LayoutDashboardRoute,
   LayoutEditorRoute: LayoutEditorRoute,
   LayoutFormsRoute: LayoutFormsRoute,
   LayoutIndexRoute: LayoutIndexRoute,

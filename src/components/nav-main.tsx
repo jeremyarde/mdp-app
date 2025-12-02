@@ -10,11 +10,11 @@ import { Link } from "@tanstack/react-router";
 
 export function NavMain() {
   const items = [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: IconDashboard,
-    },
+    // {
+    //   title: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: IconDashboard,
+    // },
     {
       title: "Editor",
       url: "/editor",
