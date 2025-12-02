@@ -2,7 +2,6 @@ dev:
     pnpm run dev
 
 build:
-    pnpm run build
-
-deploy:
+    cp -r ~/Documents/code/markdownparser/backend/pkg ./backend
+    rm -rf ./backend/pkg/.gitignore
     pnpm run build
