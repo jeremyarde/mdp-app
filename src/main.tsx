@@ -7,6 +7,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router";
 // Set up a Router instance
 const router = createRouter({
   routeTree,
+  basepath: "/mdp-app",
   context: {
     authenticated: false,
   },
