@@ -14,7 +14,6 @@ export default defineConfig({
   // Example: base: '/mdp-app/'
   // For root domain deployment, use: base: '/'
   // base: process.env.GITHUB_PAGES_BASE || "/",
-  base: "/mdp-app/",
   plugins: [
     tanstackRouter({
       target: "react",
