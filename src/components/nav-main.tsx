@@ -1,4 +1,4 @@
-import { IconChartBar, IconDashboard, IconFolder } from "@tabler/icons-react";
+import { IconChartBar, IconFolder } from "@tabler/icons-react";
 import {
   SidebarGroup,
   SidebarGroupContent,
