@@ -84,8 +84,8 @@ importers:
         specifier: ^0.555.0
         version: 0.555.0(react@19.2.0)
       markdownparser:
-        specifier: file:../markdownparser/backend/pkg
-        version: file:../markdownparser/backend/pkg
+        specifier: file:./backend/pkg
+        version: file:backend/pkg
       next-themes:
         specifier: ^0.4.6
         version: 0.4.6(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -2092,8 +2092,8 @@ packages:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
     engines: {node: '>=8'}
 
-  markdownparser@file:../markdownparser/backend/pkg:
-    resolution: {directory: ../markdownparser/backend/pkg, type: directory}
+  markdownparser@file:backend/pkg:
+    resolution: {directory: backend/pkg, type: directory}
 
   merge2@1.4.1:
     resolution: {integrity: sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg==}
@@ -4490,7 +4490,7 @@ snapshots:
     dependencies:
       semver: 6.3.1
 
-  markdownparser@file:../markdownparser/backend/pkg: {}
+  markdownparser@file:backend/pkg: {}
 
   merge2@1.4.1: {}
 
